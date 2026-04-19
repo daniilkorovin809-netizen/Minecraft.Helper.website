@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<title>Minecraft Helper - Обучающий портал</title>
+<!-- Подключаем шрифты из Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Общие стили для всей страницы */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #1a1a1a;
+    color: #fff;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    animation: fadeIn 3s ease;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Шапка сайта */
+header {
+    background-color: rgba(51, 51, 51, 0.95);
+    color: #fff;
+    padding: 20px 0;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(236, 124, 38, 0.3);
+}
+
+/* Логотип */
+.logo {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 16px;
+    background: linear-gradient(45deg, #ec7c26, #ff9a3d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Бургер-меню (кнопка) */
+.burger-menu {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #ec7c26, #ff9a3d);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(236, 124, 38, 0.3);
+    position: relative;
+    z-index: 1001;
+}
+
+.burger-menu:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(236, 124, 38, 0.4);
+}
+
+.burger-line {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/* Анимация бургера при открытом меню */
+.burger-menu.open .burger-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.burger-menu.open .burger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.open .burger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Боковое меню (sidebar) */
+.sidebar {
+    position: fixed;
+    top: 80px;
+    left: -350px;
+    width: 320px;
+    height: calc(100vh - 80px);
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.98), rgba(20, 20, 20, 0.98));
+    backdrop-filter: blur(15px);
+    border-right: 3px solid rgba(236, 124, 38, 0.5);
+    z-index: 999;
+    transition: left 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar.open {
+    left: 0;
+}
+
+.sidebar-header {
+    padding: 25px;
+    border-bottom: 2px solid rgba(236, 124, 38, 0.3);
+    text-align: center;
+}
+
+.sidebar-header h3 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    color: #ec7c26;
+    margin-bottom: 10px;
+}
+
+.sidebar-header p {
+    font-size: 12px;
+    color: #aaa;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 20px;
+}
+
+.sidebar-menu li {
+    margin-bottom: 15px;
+}
+
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-menu li a:hover {
+    background: rgba(236, 124, 38, 0.2);
+    border-left: 3px solid #ec7c26;
+    transform: translateX(5px);
+}
+
+.sidebar-menu li a .emoji {
+    font-size: 20px;
+}
+
+.sidebar-menu li a .text {
+    font-size: 14px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+/* Блок для незарегистрированных пользователей */
+.locked-section {
+    padding: 20px;
+    margin: 20px;
+    background: rgba(255, 107, 107, 0.1);
+    border-radius: 15px;
+    border: 2px dashed rgba(255, 107, 107, 0.5);
+    text-align: center;
+}
+
+.locked-section p {
+    font-size: 12px;
+    color: #ff6b6b;
+    margin-bottom: 10px;
+}
+
+.locked-section .register-hint {
+    background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 10px;
+    font-family: 'Press Start 2P', cursive;
+    cursor: pointer;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.locked-section .register-hint:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+}
+
+/* Уведомление при попытке нажать на заблокированный пункт */
+.toast-notification {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: linear-gradient(135deg, #ff6b6b, #ff4757);
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    color: white;
+    z-index: 2000;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+}
+
+.toast-notification.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Затемнение фона при открытом меню */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Центральное меню (основная навигация) */
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+}
+
+.menu a {
+    background: linear-gradient(45deg, #ec7c26, #ff9a3d);
+    padding: 12px 24px;
+    border-radius: 8px;
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    font-family: 'Press Start 2P', cursive;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(236, 124, 38, 0.3);
+}
+
+.menu a:hover {
+    background: linear-gradient(45deg, #ff9a3d, #ec7c26);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(236, 124, 38, 0.4);
+}
+
+/* Кнопка регистрации в меню */
+.register-btn {
+    background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+    padding: 12px 24px;
+    border-radius: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 18px;
+    font-family: 'Press Start 2P', cursive;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    outline: none;
+}
+
+.register-btn:hover {
+    background: linear-gradient(45deg, #45b7d1, #4ecdc4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+}
+
+/* Блок с именем пользователя */
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    animation: slideIn 0.5s ease;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #ec7c26, #ff9a3d);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(236, 124, 38, 0.3);
+}
+
+.user-name {
+    background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    color: white;
+    box-shadow: 0 4px 10px rgba(78, 205, 196, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    animation: pulse 2s infinite;
+}
+
+.logout-btn {
+    background: linear-gradient(45deg, #ff6b6b, #ff4757);
+    padding: 8px 16px;
+    border-radius: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-family: 'Press Start 2P', cursive;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.logout-btn:hover {
+    background: linear-gradient(45deg, #ff4757, #ff6b6b);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 4px 10px rgba(78, 205, 196, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 6px 15px rgba(78, 205, 196, 0.4);
+    }
+}
+
+/* Основной контент */
+main {
+    padding-top: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+main h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 3em;
+    margin-bottom: 10px;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+    background: linear-gradient(45deg, #ec7c26, #ff9a3d, #ec7c26);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
+    animation: gradientShift 3s ease-in-out infinite;
+}
+
+.you {
+    font-size: 4em;
+    letter-spacing: 0.2em;
+    margin-bottom: 10px;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 4px 4px 8px rgba(0,0,0,0.6);
+    background: linear-gradient(45deg, #4ecdc4, #45b7d1, #96ceb4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
+    animation: gradientShift 4s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Общий контейнер для всех разделов и блоков */
+.centered-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    position: relative;
+    z-index: 2;
+}
+
+h2, h3 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    color: #fff;
+    border-bottom: 3px solid #ec7c26;
+    padding-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+p {
+    line-height: 1.6;
+    color: #e0e0e0;
+    margin: 15px 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 15px 0;
+}
+li {
+    margin-bottom: 10px;
+    font-family: 'Roboto', sans-serif;
+    color: #e0e0e0;
+}
+
+.kartina {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+    z-index: 2;
+}
+.kartina img {
+    max-width: 70%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    border: 4px solid rgba(236, 124, 38, 0.3);
+    transition: all 0.3s ease;
+}
+
+.kartina img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 20px 45px rgba(236, 124, 38, 0.4);
+}
+
+.game-info {
+    background: linear-gradient(135deg, rgba(40, 40, 40, 0.9), rgba(30, 30, 30, 0.9));
+    border: 3px solid rgba(236, 124, 38, 0.5);
+    border-radius: 20px;
+    padding: 30px;
+    margin-top: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.game-info:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(236, 124, 38, 0.2);
+    border-color: rgba(236, 124, 38, 0.8);
+}
+
+.game-info::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ec7c26, #ff9a3d, #ec7c26);
+    border-radius: 22px;
+    z-index: -1;
+    opacity: 0.3;
+    animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+}
+
+.game-info h3 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.game-info p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #e0e0e0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.section {
+    background: linear-gradient(135deg, rgba(40, 40, 40, 0.9), rgba(30, 30, 30, 0.9));
+    padding: 35px;
+    margin: 50px 20px;
+    border-radius: 20px;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.3);
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    scroll-margin-top: 100px;
+    border: 3px solid transparent;
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.section::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, var(--border-color), transparent, var(--border-color));
+    border-radius: 22px;
+    z-index: -1;
+    opacity: 0.4;
+    animation: sectionGlow 4s ease-in-out infinite;
+}
+
+@keyframes sectionGlow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+}
+
+.section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+}
+
+.section:hover::before {
+    opacity: 0.6;
+}
+
+#about { --border-color: #4CAF50; }
+#features { --border-color: #2196F3; }
+#why { --border-color: #FF9800; }
+#tips { --border-color: #9C27B0; }
+
+.section ul {
+    background: rgba(236, 124, 38, 0.1);
+    border-radius: 15px;
+    padding: 25px;
+    border-left: 4px solid #ec7c26;
+}
+
+.section li {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 12px 18px;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    border-left: 3px solid #ec7c26;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.section li:hover {
+    background: rgba(236, 124, 38, 0.2);
+    transform: translateX(8px);
+    border-left: 3px solid #ff9a3d;
+}
+
+@media(max-width: 600px){
+    .menu {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .you {
+        font-size: 2.5em;
+    }
+    main h1 {
+        font-size: 2em;
+    }
+    h2, h3 {
+        font-size: 1.5em;
+    }
+    .section {
+        margin: 30px 10px;
+        padding: 25px;
+        scroll-margin-top: 90px;
+    }
+    .game-info {
+        padding: 25px;
+        margin: 30px 10px;
+    }
+    .kartina img {
+        max-width: 90%;
+    }
+    .user-profile {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .user-name {
+        font-size: 12px;
+        padding: 8px 16px;
+    }
+    .sidebar {
+        width: 280px;
+    }
+    header {
+        padding: 0 20px;
+    }
+}
+
+#top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+}
+
+/* Модальное окно регистрации */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+    padding: 40px;
+    border-radius: 20px;
+    border: 3px solid #ec7c26;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.modal-title {
+    font-family: 'Press Start 2P', cursive;
+    color: #ec7c26;
+    font-size: 1.5em;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #ec7c26;
+    font-size: 30px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #ff9a3d;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 2px solid #ec7c26;
+    background: #333;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #4ecdc4;
+}
+
+.submit-btn {
+    width: 100%;
+    background: linear-gradient(45deg, #ec7c26, #ff9a3d);
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background: linear-gradient(45deg, #ff9a3d, #ec7c26);
+    transform: translateY(-2px);
+}
+
+.message {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 8px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    text-align: center;
+    display: none;
+}
+
+.message.success {
+    background: rgba(78, 205, 196, 0.2);
+    border: 2px solid #4ecdc4;
+    color: #4ecdc4;
+}
+
+.message.error {
+    background: rgba(255, 87, 87, 0.2);
+    border: 2px solid #ff5757;
+    color: #ff5757;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="burger-menu" id="burgerMenu" onclick="toggleSidebar()">
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+    </div>
+    
+    <div class="logo">
+        ⛏️ MC HELPER
+    </div>
+    
+    <div class="menu" id="mainMenu">
+        <!-- Навигация будет добавляться динамически -->
+    </div>
+</header>
+
+<!-- Затемнение фона -->
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- Боковое меню (sidebar) -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <h3>🎮 Меню игрока</h3>
+        <p id="sidebarUserStatus">🔒 Войдите в аккаунт</p>
+    </div>
+    <ul class="sidebar-menu" id="sidebarMenu">
+        <!-- Динамическое содержимое меню -->
+    </ul>
+</div>
+
+<!-- Уведомление -->
+<div class="toast-notification" id="toastNotification">
+    ⚠️ Зарегистрируйтесь, чтобы открыть это меню!
+</div>
+
+<!-- Модальное окно регистрации -->
+<div class="modal-overlay" id="registrationModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Регистрация</h2>
+            <button class="close-btn" onclick="closeRegistration()">&times;</button>
+        </div>
+        
+        <div id="message" class="message"></div>
+        
+        <form id="registrationForm" onsubmit="return registerUser(event)">
+            <div class="form-group">
+                <label class="form-label">Имя пользователя:</label>
+                <input type="text" class="form-input" id="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Email:</label>
+                <input type="email" class="form-input" id="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Пароль:</label>
+                <input type="password" class="form-input" id="password" required minlength="6">
+            </div>
+            
+            <button type="submit" class="submit-btn">Зарегистрироваться</button>
+        </form>
+    </div>
+</div>
+
+<!-- Якорь для верха страницы -->
+<div id="top"></div>
+
+<main id="main">
+    <h1 class="you">Minecraft</h1>
+    <h1>Что за игра и что она из себя представляет?</h1>
+</main>
+
+<div class="kartina">
+    <img src="https://image.winudf.com/v2/image1/Y29tLmthbHZsYWQuc2hhZGVyc19zY3JlZW5fM18xNjUxNzY0MDM1XzAxNg/screen-3.jpg?fakeurl=1&type=.jpg" alt="Скриншот Minecraft">
+</div>
+
+<div class="game-info centered-container">
+    <h3><strong>Игра без границ</strong></h3>
+    <p><strong>Minecraft – это игра-песочница, где вы можете строить всё, что угодно, из блоков! Нет конкретной цели, только ваш мир и ваша фантазия. Добывайте ресурсы, сражайтесь с монстрами, создавайте невероятные механизмы.</strong></p>
+    <p><strong>Режимы игры: Выживание (собирайте ресурсы, чтобы выжить), Творческий (неограниченные ресурсы), и Хардкор (одна жизнь). Играйте с друзьями, устанавливайте моды и расширяйте возможности игры!</strong></p>
+</div>
+
+<div class="centered-container">
+  <div class="section" id="about">
+    <h2><strong>История и развитие</strong></h2>
+    <p><strong>Игра началась как небольшой проект Маркуса "Notch" Перссона. Благодаря своей уникальности и возможностям, Minecraft быстро приобрела популярность и стала одной из самых продаваемых игр в истории.</strong></p>
+  </div>
+
+  <div class="section" id="features">
+    <h2>Особенности игры</h2>
+    <ul>
+      <li><strong>Генерация мира</strong>: Уникальные случайные миры</li>
+      <li><strong>Многопользовательский режим</strong>: Игра с друзьями</li>
+      <li><strong>Моды и ресурспаки</strong>: Расширение возможностей</li>
+      <li><strong>Крафтинг и строительство</strong>: Создание всего, что угодно</li>
+    </ul>
+  </div>
+
+  <div class="section" id="why">
+    <h2>Почему стоит попробовать Minecraft?</h2>
+    <p><strong>Игра стимулирует креативность, навыки решения задач и командную работу. В открытом мире каждый может реализовать свои идеи.</strong></p>
+  </div>
+
+  <div class="section" id="tips">
+    <h2>Полезные советы для новичков</h2>
+    <ul>
+      <li><strong>Начинайте с простых построек</strong></li>
+      <li><strong>Изучайте разные режимы игры</strong></li>
+      <li><strong>Следите за обновлениями</strong></li>
+      <li><strong>Присоединяйтесь к сообществам</strong></li>
+    </ul>
+  </div>
+
+  <div class="section" id="contact">
+    <h2><strong>Контакты</strong></h2>
+    <ul>
+      <li><strong>Email:</strong> minecraft-fan@example.com</li>
+      <li><strong>Телефон:</strong> +7 (999) 123-45-67</li>
+      <li><strong>Социальные сети:</strong> @minecraft_fan</li>
+    </ul>
+  </div>
+</div>
+
+<footer style="background: linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(20, 20, 20, 0.95)); padding: 30px 20px; text-align: center; margin-top: 50px; border-top: 3px solid rgba(236, 124, 38, 0.3);">
+    <div style="max-width: 900px; margin: 0 auto;">
+        <p style="color: #e0e0e0;"><strong>Разработано с ❤️ для сообщества Minecraft</strong></p>
+        <p style="color: #aaa;">© 2026 Minecraft Fan Site. Все права защищены.</p>
+        <p style="color: #888; font-size: 0.8em;">Minecraft является товарным знаком Mojang Studios. Данный сайт не аффилирован с Mojang Studios.</p>
+    </div>
+</footer>
+
+<script>
+// Глобальные переменные
+let currentUser = null;
+
+// Функция для отображения меню в зависимости от состояния авторизации
+function renderMenu() {
+    const menuContainer = document.getElementById('mainMenu');
+    
+    if (currentUser) {
+        menuContainer.innerHTML = `
+            <a href="#top">Главное</a>
+            <a href="#about">О нас</a>
+            <a href="#contact">Контакты</a>
+            <div class="user-profile">
+                <div class="user-avatar">${currentUser.username.charAt(0).toUpperCase()}</div>
+                <div class="user-name">${currentUser.username}</div>
+                <button class="logout-btn" onclick="logoutUser()">Выйти</button>
+            </div>
+        `;
+    } else {
+        menuContainer.innerHTML = `
+            <a href="#top">Главное</a>
+            <a href="#about">О нас</a>
+            <a href="#contact">Контакты</a>
+            <button class="register-btn" onclick="openRegistration()">Регистрация</button>
+        `;
+    }
+    
+    // Обновляем боковое меню
+    renderSidebar();
+    
+    // Добавляем обработчики для плавной прокрутки
+    document.querySelectorAll('.menu a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            let targetPosition;
+            if (targetId === '#about') {
+                targetPosition = document.body.scrollHeight - window.innerHeight;
+            } else if (targetId === '#contact') {
+                const targetElement = document.querySelector('footer');
+                const headerHeight = document.querySelector('header').offsetHeight;
+                targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            } else {
+                const targetElement = document.querySelector(targetId);
+                const headerHeight = document.querySelector('header').offsetHeight;
+                targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+            }
+            
+            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+            history.pushState(null, null, targetId);
+        });
+    });
+}
+
+// Функция для отображения бокового меню
+function renderSidebar() {
+    const sidebarMenu = document.getElementById('sidebarMenu');
+    const sidebarUserStatus = document.getElementById('sidebarUserStatus');
+    
+    if (currentUser) {
+        sidebarUserStatus.innerHTML = `✅ Добро пожаловать, ${currentUser.username}!`;
+        sidebarUserStatus.style.color = "#4ecdc4";
+        
+        sidebarMenu.innerHTML = `
+            <li><a href="#" onclick="showToast('🛠️ Крафт верстак - скоро будет доступен!'); return false;">
+                <span class="emoji">🛠️</span>
+                <span class="text">Крафт верстак</span>
+            </a></li>
+            <li><a href="#" onclick="showToast('🧪 Зельеварка - скоро будет доступна!'); return false;">
+                <span class="emoji">🧪</span>
+                <span class="text">Зельеварка</span>
+            </a></li>
+            <li><a href="#" onclick="showToast('⌨️ Консольные команды - скоро будут доступны!'); return false;">
+                <span class="emoji">⌨️</span>
+                <span class="text">Консольные команды</span>
+            </a></li>
+            <li><a href="#" onclick="showToast('📖 Гайды - скоро будут доступны!'); return false;">
+                <span class="emoji">📖</span>
+                <span class="text">Гайды для новичков</span>
+            </a></li>
+            <li><a href="#" onclick="showToast('🏆 Достижения - скоро будут доступны!'); return false;">
+                <span class="emoji">🏆</span>
+                <span class="text">Достижения</span>
+            </a></li>
+        `;
+    } else {
+        sidebarUserStatus.innerHTML = `🔒 Зарегистрируйтесь, чтобы открыть меню!`;
+        sidebarUserStatus.style.color = "#ff6b6b";
+        
+        sidebarMenu.innerHTML = `
+            <div class="locked-section">
+                <p>🔒 Этот раздел доступен только зарегистрированным пользователям</p>
+                <div class="register-hint" onclick="openRegistration()">📝 Зарегистрироваться →</div>
+            </div>
+            <li><a href="#" onclick="showLockedToast(); return false;">
+                <span class="emoji">🛠️</span>
+                <span class="text">Крафт верстак (🔒)</span>
+            </a></li>
+            <li><a href="#" onclick="showLockedToast(); return false;">
+                <span class="emoji">🧪</span>
+                <span class="text">Зельеварка (🔒)</span>
+            </a></li>
+            <li><a href="#" onclick="showLockedToast(); return false;">
+                <span class="emoji">⌨️</span>
+                <span class="text">Консольные команды (🔒)</span>
+            </a></li>
+            <li><a href="#" onclick="showLockedToast(); return false;">
+                <span class="emoji">📖</span>
+                <span class="text">Гайды (🔒)</span>
+            </a></li>
+        `;
+    }
+}
+
+// Показать уведомление о необходимости регистрации
+function showLockedToast() {
+    showToast('⚠️ Зарегистрируйтесь, чтобы разблокировать этот раздел!');
+}
+
+// Показать любое уведомление
+function showToast(message) {
+    const toast = document.getElementById('toastNotification');
+    toast.textContent = message;
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
+
+// Открыть/закрыть боковое меню
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const burger = document.getElementById('burgerMenu');
+    
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('active');
+    burger.classList.toggle('open');
+}
+
+function closeSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const burger = document.getElementById('burgerMenu');
+    
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    burger.classList.remove('open');
+}
+
+function checkSavedUser() {
+    const savedUser = localStorage.getItem('minecraftUser');
+    if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        renderMenu();
+    } else {
+        renderSidebar();
+    }
+}
+
+function openRegistration() {
+    closeSidebar();
+    document.getElementById('registrationModal').style.display = 'flex';
+}
+
+function closeRegistration() {
+    document.getElementById('registrationModal').style.display = 'none';
+    document.getElementById('message').style.display = 'none';
+    document.getElementById('registrationForm').reset();
+}
+
+function registerUser(event) {
+    event.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const message = document.getElementById('message');
+    
+    message.style.display = 'none';
+    message.className = 'message';
+    
+    if (!username || !email || !password) {
+        showMessage('Заполните все поля!', 'error');
+        return false;
+    }
+    
+    if (password.length < 6) {
+        showMessage('Пароль должен быть минимум 6 символов', 'error');
+        return false;
+    }
+    
+    if (!isValidEmail(email)) {
+        showMessage('Введите корректный email', 'error');
+        return false;
+    }
+    
+    currentUser = {
+        username: username,
+        email: email,
+        registeredAt: new Date().toLocaleString()
+    };
+    
+    localStorage.setItem('minecraftUser', JSON.stringify(currentUser));
+    
+    showMessage(`Добро пожаловать, ${username}! Регистрация успешна.`, 'success');
+    renderMenu();
+    
+    setTimeout(() => {
+        closeRegistration();
+        showToast(`🎉 Добро пожаловать в мир Minecraft, ${username}! Теперь вам доступно боковое меню! 🎉`);
+    }, 1500);
+    
+    return false;
+}
+
+function logoutUser() {
+    if (confirm('Вы уверены, что хотите выйти из аккаунта?')) {
+        currentUser = null;
+        localStorage.removeItem('minecraftUser');
+        renderMenu();
+        closeSidebar();
+        showToast('👋 Вы вышли из аккаунта! Зарегистрируйтесь снова, чтобы получить доступ к меню.');
+    }
+}
+
+function showMessage(text, type) {
+    const message = document.getElementById('message');
+    message.textContent = text;
+    message.className = `message ${type}`;
+    message.style.display = 'block';
+}
+
+function isValidEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+document.getElementById('registrationModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeRegistration();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    checkSavedUser();
+    renderMenu();
+});
+</script>
+</body>
+</html>

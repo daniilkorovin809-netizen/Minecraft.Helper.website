@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<title>Minecraft Helper</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<!-- CSS файл -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="burger-menu" id="burgerMenu" onclick="toggleSidebar()">
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+        <div class="burger-line"></div>
+    </div>
+    
+    <div class="logo">
+        ⛏️ MC HELPER
+    </div>
+    
+    <div class="menu" id="mainMenu">
+        <!-- Навигация будет добавляться динамически через JS -->
+    </div>
+</header>
+
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- Боковое меню -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <h3>🎮 Меню игрока</h3>
+        <p id="sidebarUserStatus">🔒 Войдите в аккаунт</p>
+    </div>
+    <ul class="sidebar-menu" id="sidebarMenu">
+        <!-- Динамическое содержимое меню -->
+    </ul>
+</div>
+
+<!-- Уведомление -->
+<div class="toast-notification" id="toastNotification">
+    ⚠️ Зарегистрируйтесь, чтобы открыть это меню!
+</div>
+
+<!-- Модальное окно регистрации -->
+<div class="modal-overlay" id="registrationModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Регистрация</h2>
+            <button class="close-btn" onclick="closeRegistration()">&times;</button>
+        </div>
+        
+        <div id="message" class="message"></div>
+        
+        <form id="registrationForm" onsubmit="return registerUser(event)">
+            <div class="form-group">
+                <label class="form-label">Имя пользователя:</label>
+                <input type="text" class="form-input" id="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Email:</label>
+                <input type="email" class="form-input" id="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Пароль:</label>
+                <input type="password" class="form-input" id="password" required minlength="6">
+            </div>
+            
+            <button type="submit" class="submit-btn">Зарегистрироваться</button>
+        </form>
+    </div>
+</div>
+
+<!-- Якорь для верха страницы -->
+<div id="top"></div>
+
+<main id="main">
+    <h1 class="you">Minecraft</h1>
+    <h1>Что за игра и что она из себя представляет?</h1>
+</main>
+
+<!-- КАРТИНКА -->
+
+<div class="kartina">
+    <img src="img/mine.jpg" alt="Скриншот Minecraft">
+</div>
+
+<div class="game-info centered-container">
+    <h3><strong>Игра без границ</strong></h3>
+    <p><strong>Minecraft – это игра-песочница, где вы можете строить всё, что угодно, из блоков! Нет конкретной цели, только ваш мир и ваша фантазия. Добывайте ресурсы, сражайтесь с монстрами, создавайте невероятные механизмы.</strong></p>
+    <p><strong>Режимы игры: Выживание (собирайте ресурсы, чтобы выжить), Творческий (неограниченные ресурсы), и Хардкор (одна жизнь). Играйте с друзьями, устанавливайте моды и расширяйте возможности игры!</strong></p>
+</div>
+
+<div class="centered-container">
+  <div class="section" id="about">
+    <h2><strong>История и развитие</strong></h2>
+    <p><strong>Игра началась как небольшой проект Маркуса "Notch" Перссона. Благодаря своей уникальности и возможностям, Minecraft быстро приобрела популярность и стала одной из самых продаваемых игр в истории.</strong></p>
+  </div>
+
+  <div class="section" id="features">
+    <h2>Особенности игры</h2>
+    <ul>
+      <li><strong>Генерация мира</strong>: Уникальные случайные миры</li>
+      <li><strong>Многопользовательский режим</strong>: Игра с друзьями</li>
+      <li><strong>Моды и ресурспаки</strong>: Расширение возможностей</li>
+      <li><strong>Крафтинг и строительство</strong>: Создание всего, что угодно</li>
+    </ul>
+  </div>
+
+  <div class="section" id="why">
+    <h2>Почему стоит попробовать Minecraft?</h2>
+    <p><strong>Игра стимулирует креативность, навыки решения задач и командную работу. В открытом мире каждый может реализовать свои идеи.</strong></p>
+  </div>
+
+  <div class="section" id="tips">
+    <h2>Полезные советы для новичков</h2>
+    <ul>
+      <li><strong>Начинайте с простых построек</strong></li>
+      <li><strong>Изучайте разные режимы игры</strong></li>
+      <li><strong>Следите за обновлениями</strong></li>
+      <li><strong>Присоединяйтесь к сообществам</strong></li>
+    </ul>
+  </div>
+
+  <div class="section" id="contact">
+    <h2><strong>Контакты</strong></h2>
+    <ul>
+      <li><strong>Email:</strong> minecraft-fan@example.com</li>
+      <li><strong>Телефон:</strong> +7 (999) 123-45-67</li>
+      <li><strong>Социальные сети:</strong> @minecraft_fan</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+    <div>
+        <p><strong>Разработано с ❤️ для сообщества Minecraft</strong></p>
+        <p>© 2026 Minecraft Fan Site. Все права защищены.</p>
+        <p style="font-size: 0.8em;">Minecraft является товарным знаком Mojang Studios. Данный сайт не аффилирован с Mojang Studios.</p>
+    </div>
+</footer>
+
+
+<script src="script.js"></script>
+</body>
+</html>

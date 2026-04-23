@@ -27,3 +27,7 @@ daniilkorovin809-netizen
 
 ## 📅 Год создания
 2026
+
+
+## Ссылка на презентацию:
+https://docs.google.com/presentation/d/1YlIaacGkJCb_3y5-mmjngbCGV7JD-hss/edit?usp=sharing&ouid=100455895412995617263&rtpof=true&sd=true

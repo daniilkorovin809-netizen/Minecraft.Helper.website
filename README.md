@@ -30,4 +30,4 @@ daniilkorovin809-netizen
 
 
 ## Ссылка на презентацию:
-https://docs.google.com/presentation/d/1YlIaacGkJCb_3y5-mmjngbCGV7JD-hss/edit?usp=sharing&ouid=100455895412995617263&rtpof=true&sd=true
+https://drive.google.com/uc?export=download&id=1YlIaacGkJCb_3y5-mmjngbCGV7JD-hss
